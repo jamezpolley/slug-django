@@ -1,0 +1,3 @@
+[submodule "python-openid"]
+	path = python-openid
+	url = https://github.com/openid/python-openid.git

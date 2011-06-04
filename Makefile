@@ -32,6 +32,25 @@ upstream/django-mediagenerator/mediagenerator: upstream/django-mediagenerator
 mediagenerator: upstream/django-mediagenerator/mediagenerator
 	ln -s $^ $@
 
+###############################################################################
+# django-openid-auth
+###############################################################################
+
+OAVERSION=0.3
+OPENIDAUTH=django-openid-auth-$(OAVERSION)
+
+$(OPENIDAUTH).tar.gz:
+	curl -LO http://launchpad.net/django-openid-auth/trunk/$(OAVERSION)/+download/$(OPENIDAUTH).tar.gz
+
+$(OPENIDAUTH): $(OPENIDAUTH).tar.gz
+	tar -zxvf $^
+	touch -r $@ -m $^
+
+django_openid_auth: $(OPENIDAUTH)
+	ln -s $^/$@ $@
+
+###############################################################################
+
 .PHONY: sample_app .hgignore clean serve symlinks
 
 symlinks: django djangotoolbox autoload dbindexer djangoappengine mediagenerator
