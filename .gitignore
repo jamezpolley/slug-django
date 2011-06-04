@@ -1,3 +1,5 @@
+*.pyc
+*.tar.gz
 autoload
 dbindexer
 django
@@ -11,3 +13,4 @@ upstream/django-nonrel
 upstream/django-testapp
 upstream/djangoappengine
 upstream/djangotoolbox
+django-openid-auth-0.3/
