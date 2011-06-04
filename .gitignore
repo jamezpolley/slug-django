@@ -15,3 +15,5 @@ upstream/djangoappengine
 upstream/djangotoolbox
 django-openid-auth-0.3/
 django_openid_auth
+openid
+.gaedata/

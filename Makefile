@@ -1,10 +1,32 @@
+.PHONY: sample_app .hgignore .gitignore clean serve symlinks
+
+serve:
+	find . -name \*.pyc -exec rm \{\} \;
+	./manage.py runserver
+
+###############################################################################
+# git submodules
+###############################################################################
+
+git:
+	@echo "Updating git submodules." ;\
+		git submodule init; \
+		git submodule update
+
+openid: git
+	ln -s python-openid/openid openid
+
+###############################################################################
+# django-nonrel, djangoappengine, and friends
+###############################################################################
+
 upstream:
 	mkdir upstream
 
 upstream/django-nonrel upstream/djangoappengine upstream/djangotoolbox upstream/django-dbindexer upstream/django-testapp upstream/django-mediagenerator: BBUSER = wkornewald
 django-autoload: BBUSER=twanschik
 upstream/django-nonrel upstream/djangoappengine upstream/djangotoolbox upstream/django-dbindexer upstream/django-testapp upstream/django-mediagenerator upstream/django-autoload: upstream
-	if test -d $@; \
+	@if test -d $@; \
 		then cd $@; hg pull; \
 		else cd upstream; hg clone https://bitbucket.org/$(BBUSER)/$(notdir $@); \
 	fi
@@ -51,9 +73,7 @@ django_openid_auth: $(OPENIDAUTH)
 
 ###############################################################################
 
-.PHONY: sample_app .hgignore clean serve symlinks
-
-symlinks: django djangotoolbox autoload dbindexer djangoappengine mediagenerator
+symlinks: django djangotoolbox autoload dbindexer djangoappengine mediagenerator django_openid_auth openid
 
 sample_app: upstream/django-testapp
 	cp -r $^/* .
@@ -71,5 +91,3 @@ sample_app: upstream/django-testapp
 clean:
 	find . -name \*.pyc -exec rm \{\} \;
 
-serve:
-	./manage.py runserver

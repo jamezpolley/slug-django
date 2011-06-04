@@ -50,9 +50,6 @@ class Event(models.Model):
     start = models.DateTimeField(blank=False)
     end = models.DateTimeField(blank=False)
 
-admin.site.register(Event)
-
-
 #class LightningTalk(db.Model):
 #    """An lightning talk to be given at an event."""
 #    created_by = openid.UserProperty(
