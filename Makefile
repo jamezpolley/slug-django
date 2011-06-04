@@ -1,7 +1,6 @@
 .PHONY: sample_app .hgignore .gitignore clean serve symlinks
 
-serve:
-	find . -name \*.pyc -exec rm \{\} \;
+serve: clean
 	./manage.py runserver
 
 ###############################################################################
