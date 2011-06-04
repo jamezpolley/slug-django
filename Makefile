@@ -16,6 +16,32 @@ openid: git
 	ln -s python-openid/openid openid
 
 ###############################################################################
+# Markdown parser
+###############################################################################
+MARKDOWN=Markdown-2.0.3
+MARKDOWN_EXT=$(shell find markdown-extensions -type f -name \*.py)
+
+# Download the tar.gz
+$(MARKDOWN).tar.gz:
+	curl -O http://pypi.python.org/packages/source/M/Markdown/$(MARKDOWN).tar.gz
+
+# Extract the tar.gz
+$(MARKDOWN): $(MARKDOWN).tar.gz $(MARKDOWN_EXT)
+	tar -zxvf $(MARKDOWN).tar.gz
+	@# Update modtime on tar.gz to match directory so we don't continually rebuild
+	@touch -r $@ -m $^
+	for f in $(MARKDOWN_EXT); do \
+		cp $$f $(MARKDOWN)/markdown/extensions/; \
+	done
+	ln -sf markdown $^
+
+# Human name target
+markdown: $(MARKDOWN)
+
+markdown-clean:
+	rm -rf $(MARKDOWN)*
+
+###############################################################################
 # django-nonrel, djangoappengine, and friends
 ###############################################################################
 

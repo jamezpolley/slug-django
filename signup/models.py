@@ -9,21 +9,13 @@ from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
 
-#class Announcement(db.Model):
-#    """An announcement for an event."""
-#    created_by = openid.UserProperty(
-#            auto_current_user_add=True, required=True)
-#    created_on = db.DateTimeProperty(
-#            auto_now_add=True, required=True)
-#
-#    name = db.StringProperty(required=True)
-#    plaintext = db.TextProperty()
-#    html = db.BlobProperty()
-#
-#    published_by = appengine.UserProperty(
-#            auto_current_user_add=True, required=True)
-#    published_on = db.DateTimeProperty(
-#            auto_now_add=True, required=True)
+class MeetingTemplate(models.Model):
+
+    def __unicode__(self):
+        return u'%s' % self.name
+
+    name = models.CharField(max_length=500,blank=False)
+    text = models.TextField()
 
 
 class Event(models.Model):
@@ -33,22 +25,41 @@ class Event(models.Model):
         """Return the canonical url for an event."""
         return "/event/%s" % self.key().id()
 
+    def __unicode__(self):
+        return u'%s' % self.name
+
     created_by = models.ForeignKey(User)
     created_on = models.DateTimeField(
             auto_now_add=True)
 
     name = models.CharField(max_length=500,blank=False)
     input = models.TextField()
+    template = models.ForeignKey(MeetingTemplate, null=True)
     plaintext = models.TextField()
     html = models.TextField()
 
     published = models.BooleanField(default=False)
-    #announcement = models.ReferenceField(Announcement)
 
     emailed = models.BooleanField(default=False)
 
     start = models.DateTimeField(blank=False)
     end = models.DateTimeField(blank=False)
+
+
+class Announcement(models.Model):
+    """An announcement for an event."""
+    created_by = models.ForeignKey(User)
+    created_on = models.DateTimeField(
+            auto_now_add=True)
+
+    event = models.ForeignKey(Event, related_name='announcements')
+    name = models.CharField(max_length=500,blank=False)
+    plaintext = models.TextField()
+    html = models.TextField()
+
+    published_by = models.ForeignKey(User, null=True)
+    published_on = models.DateTimeField(null=True)
+
 
 #class LightningTalk(db.Model):
 #    """An lightning talk to be given at an event."""
