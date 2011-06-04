@@ -1,0 +1,13 @@
+autoload
+dbindexer
+django
+djangoappengine
+djangotoolbox
+mediagenerator
+upstream/django-autoload
+upstream/django-dbindexer
+upstream/django-mediagenerator
+upstream/django-nonrel
+upstream/django-testapp
+upstream/djangoappengine
+upstream/djangotoolbox
