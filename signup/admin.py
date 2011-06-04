@@ -8,7 +8,8 @@ from django.contrib import admin
 import signup.models
 
 class EventAdmin(admin.ModelAdmin):
-    exclude = ('created_by','plaintext','html', 'published', 'emailed')
+    readonly_fields = ('created_by', 'created_on', 'plaintext', 'html',
+            'published', 'emailed')
     list_display = ('name', 'start', 'end')
 
     def save_model(self, request, obj, form, change):

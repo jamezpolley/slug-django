@@ -34,7 +34,6 @@ class Event(models.Model):
 
     name = models.CharField(max_length=500,blank=False)
     input = models.TextField()
-    template = models.ForeignKey(MeetingTemplate, null=True)
     plaintext = models.TextField()
     html = models.TextField()
 
