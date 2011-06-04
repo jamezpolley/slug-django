@@ -1,6 +1,6 @@
 .PHONY: sample_app .hgignore .gitignore clean serve symlinks
 
-serve: clean
+serve: git openid symlinks clean
 	./manage.py runserver
 
 ###############################################################################
@@ -23,7 +23,7 @@ upstream:
 	mkdir upstream
 
 upstream/django-nonrel upstream/djangoappengine upstream/djangotoolbox upstream/django-dbindexer upstream/django-testapp upstream/django-mediagenerator: BBUSER = wkornewald
-django-autoload: BBUSER=twanschik
+upstream/django-autoload: BBUSER=twanschik
 upstream/django-nonrel upstream/djangoappengine upstream/djangotoolbox upstream/django-dbindexer upstream/django-testapp upstream/django-mediagenerator upstream/django-autoload: upstream
 	@if test -d $@; \
 		then cd $@; hg pull; \
