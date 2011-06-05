@@ -13,7 +13,7 @@ git:
 		git submodule update
 
 openid: git
-	ln -s python-openid/openid openid
+	-ln -s python-openid/openid openid
 
 ###############################################################################
 # django-nonrel, djangoappengine, and friends
