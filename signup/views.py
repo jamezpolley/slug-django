@@ -5,6 +5,7 @@ import signup.models
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.http import Http404
+from django.shortcuts import render_to_response
 from django.views.generic.simple import direct_to_template
 
 
@@ -13,10 +14,10 @@ def editevent(request, eventid):
     if not request.user.is_staff:
         #Is logged in, but not staff. Shennanigans! Send them home
         return HttpResponseRedirect('/')
-    templates = signup.models.Templates.objects.all()
+    templates = signup.models.MeetingTemplate.objects.all()
     try:
         event = signup.models.Event.objects.get(pk=eventid)
-    except Event.DoesNotExist:
+    except signup.models.Event.DoesNotExist:
         raise Http404
 
     return render_to_response('signup/editevent.html', {
