@@ -26,7 +26,17 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: signup_announcement
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: signup_event
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: signup_meetingtemplate
   properties:
   - name: __key__
     direction: desc

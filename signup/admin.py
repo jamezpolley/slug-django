@@ -8,7 +8,8 @@ from django.contrib import admin
 import signup.models
 
 class EventAdmin(admin.ModelAdmin):
-    readonly_fields = ('created_by','plaintext','html', 'published', 'emailed')
+    readonly_fields = ('created_by', 'created_on', 'plaintext', 'html',
+            'published', 'emailed')
     list_display = ('name', 'start', 'end')
 
     def save_model(self, request, obj, form, change):
@@ -17,3 +18,17 @@ class EventAdmin(admin.ModelAdmin):
         obj.save()
 
 admin.site.register(signup.models.Event, EventAdmin)
+
+class AnnouncementAdmin(admin.ModelAdmin):
+    exclude = ('created_by', 'plaintext','html', 'published_by', 'published_on')
+    list_display = ('name', 'event')
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+            obj.published_by = request.user
+        obj.save()
+
+admin.site.register(signup.models.Announcement, AnnouncementAdmin)
+
+admin.site.register(signup.models.MeetingTemplate)
